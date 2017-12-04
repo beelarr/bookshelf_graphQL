@@ -5,9 +5,12 @@ Types::QueryType = GraphQL::ObjectType.define do
 
   # TODO: remove me
   field :testField, types.String do
+    argument :name, types.String, "Enter your name"
     description "An example field added by the generator"
     resolve ->(obj, args, ctx) {
-      "Hello World!"
+      Rails.logger.info args.inspect
+      "Hello #{args[:name]}!"
     }
   end
+
 end
