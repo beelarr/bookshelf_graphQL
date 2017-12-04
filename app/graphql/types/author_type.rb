@@ -13,6 +13,10 @@ Types::AuthorType = GraphQL::ObjectType.define do
     resolve ->(o,_,_) { [o.first_name, o.last_name].compact.join(' ')}
   end
 
+  field :coordinates, Types::CoordinatePair do
+    description 'The coordinates for the author'
+  end
+
 
 
 
