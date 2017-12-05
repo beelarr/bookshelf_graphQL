@@ -17,6 +17,7 @@ Types::AuthorType = GraphQL::ObjectType.define do
     description 'The coordinates for the author'
   end
 
+  field :publication_years, types[types.Int]  # Type of Array of Integer Values
 
 
 
