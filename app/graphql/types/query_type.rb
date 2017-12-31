@@ -12,6 +12,19 @@ Types::QueryType = GraphQL::ObjectType.define do
       "Hello #{args.name}!"
     }
   end
+
+
+  field :login, types.String do
+    argument :email, types.String
+    argument :password, types.String
+
+    resolve -> (_, args, _) {
+      user = User.where(email: args.email).first
+      user.sessions.create.key if user.try(:authenticate, args.password)
+    }
+  end
+
+
 # Exposes to frontend
   field :author, Types::AuthorType do
     argument :id, types.ID
