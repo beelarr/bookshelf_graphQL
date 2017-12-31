@@ -17,6 +17,9 @@ Types::QueryType = GraphQL::ObjectType.define do
   field :login, types.String do
     argument :email, types.String
     argument :password, types.String
+
+    is_public true
+
     description "One email and password as strings"
     resolve -> (_, args, _) {
       user = User.where(email: args[:email]).first
@@ -35,12 +38,16 @@ Types::QueryType = GraphQL::ObjectType.define do
   field :author, Types::AuthorType do
     argument :id, types.ID
     description "One Author"
+
+    must_be [:superadmin]
+
     resolve -> (obj, args, ctx) {
       Author.where(id: args[:id]).first
     }
   end
 
   field :all_authors, types[Types::AuthorType] do
+    is_public true
     description 'All of the authors in the database'
     resolve -> (_, _, _) {
       Author.all
