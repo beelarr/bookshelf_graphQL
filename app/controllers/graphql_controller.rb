@@ -1,4 +1,12 @@
 class GraphqlController < ApplicationController
+
+  before_action do
+    unless @session = Session.where(key:request.headers["Authorization"]).first
+      head(:unauthorized)
+      false
+    end
+  end
+
   def execute
     variables = ensure_hash(params[:variables])
     query = params[:query]
