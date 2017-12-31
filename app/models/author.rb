@@ -10,6 +10,6 @@ class Author < ApplicationRecord
   end
 
   def publication_years
-    (1..rand(10)).to_a.map{1900 + rand(100)}
+    (1..rand(10)).to_a.map{1900 + rand(117)}
   end
 end

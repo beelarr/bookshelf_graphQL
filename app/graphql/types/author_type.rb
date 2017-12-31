@@ -29,9 +29,10 @@ Types::AuthorType = GraphQL::ObjectType.define do
 
   field :coordinates, Types::CoordinatePair do
     description 'The coordinates for the author'
+    # because we have a method in the model that directly matches the name of this field graphql will use it
   end
 
-  field :publication_years, types[types.Int]  # Type of Array of Integer Values
+  field :publication_years, types[types.Int]  # The type is an Array of Integer Values
 
 
 
