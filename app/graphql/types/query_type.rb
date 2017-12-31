@@ -25,6 +25,11 @@ Types::QueryType = GraphQL::ObjectType.define do
     }
   end
 
+  field :current_user, Types::UserType do
+    # would not accept dot notation here
+    resolve -> (_, _, ctx) {ctx[:current_user]}
+  end
+
 
 # Exposes to frontend
   field :author, Types::AuthorType do
