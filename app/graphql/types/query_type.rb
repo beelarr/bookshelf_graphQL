@@ -17,10 +17,11 @@ Types::QueryType = GraphQL::ObjectType.define do
   field :login, types.String do
     argument :email, types.String
     argument :password, types.String
-
+    description "One email and password as strings"
     resolve -> (_, args, _) {
-      user = User.where(email: args.email).first
-      user.sessions.create.key if user.try(:authenticate, args.password)
+      user = User.where(email: args[:email]).first
+      # if the user is authenticated via password then a session is created and key via session model
+      user.sessions.create.key if user.try(:authenticate, args[:password])
     }
   end
 
