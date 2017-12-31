@@ -12,6 +12,25 @@ Types::QueryType = GraphQL::ObjectType.define do
       "Hello #{args.name}!"
     }
   end
+
+
+  field :login, types.String do
+    argument :email, types.String
+    argument :password, types.String
+    description "One email and password as strings"
+    resolve -> (_, args, _) {
+      user = User.where(email: args[:email]).first
+      # if the user is authenticated via password then a session is created and key via session model
+      user.sessions.create.key if user.try(:authenticate, args[:password])
+    }
+  end
+
+  field :current_user, Types::UserType do
+    # would not accept dot notation here
+    resolve -> (_, _, ctx) {ctx[:current_user]}
+  end
+
+
 # Exposes to frontend
   field :author, Types::AuthorType do
     argument :id, types.ID
