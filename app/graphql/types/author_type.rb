@@ -23,7 +23,7 @@ Types::AuthorType = GraphQL::ObjectType.define do
 
   field :full_name, types.String do
     description 'The authors full name'
-    # _ can be used for unused arguments - saves memeory
+    # _ can be used for unused arguments - saves memory
     resolve ->(o,_,_) { [o.first_name, o.last_name].compact.join(' ')}
   end
 

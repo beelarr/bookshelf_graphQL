@@ -6,13 +6,13 @@ Types::QueryType = GraphQL::ObjectType.define do
   # TODO: remove me
   field :testField, types.String do
     argument :name, types.String, "Enter your name"
-    description "An example field added by the generator"
+    description "A greeting dynamically populated by the name entered"
     resolve ->(obj, args, ctx) {
       Rails.logger.info args.inspect
-      "Hello #{args[:name]}!"
+      "Hello #{args.name}!"
     }
   end
-
+# Exposes to frontend
   field :author, Types::AuthorType do
     argument :id, types.ID
     description "One Author"
